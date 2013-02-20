@@ -1,5 +1,8 @@
 package introduction
 
+import work.FactorNumber
+import work.Work
+
 object MyNumbers {
 
   def computeSquare(n: Int): Int = {
@@ -11,7 +14,7 @@ object MyNumbers {
   }
 
   def findTwoLastElements(numbers: List[Int]): List[Int] = {
-   numbers.takeRight(2)
+    numbers.takeRight(2)
   }
 
   def findEvenNumbers(numbers: List[Int]): List[Int] = {
@@ -27,6 +30,19 @@ object MyNumbers {
     numbers.filter(predicate)
   }
 
-
-
+  def findSumOfAllMaxFactors(numbers: Seq[FactorNumber]): Long = {
+    val factors = numbers.map((number: FactorNumber) => {
+      number.perform.max
+    })
+    factors.sum
+//    numbers.map(w => w.perform.max).sum
+  }
+  
+  def computeSquareOfIntOrString(number: Any): Int = {
+    val n = number match {
+      case i: Int => i
+      case s: String => s.toInt
+    }
+    computeSquare(n)
+  }
 }
