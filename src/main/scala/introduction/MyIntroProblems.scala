@@ -30,7 +30,7 @@ object MyIntroProblems {
     numbers.filter(predicate)
   }
 
-  def findSumOfAllMaxFactors(numbers: Seq[FactorNumber]): Long = {
+  def findSumOfAllMaxFactors(numbers: List[FactorNumber]): Long = {
     val factors = numbers.map((number: FactorNumber) => {
       number.perform.max
     })
