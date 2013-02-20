@@ -85,6 +85,3 @@ object Examples extends App {
   futureHelloWorld
 //  simpleTransformation
 }
-
-
-
