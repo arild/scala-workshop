@@ -1,9 +1,9 @@
 package introduction
 
 import work.FactorNumber
-import work.Work
 
-object MyNumbers {
+
+object MyIntroProblems {
 
   def computeSquare(n: Int): Int = {
     n * n
@@ -45,4 +45,5 @@ object MyNumbers {
     }
     computeSquare(n)
   }
+
 }
