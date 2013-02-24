@@ -4,5 +4,5 @@ project/target
 .project
 .classpath
 .cache
-.idea/
+.idea*
 *.iml
