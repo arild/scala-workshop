@@ -76,82 +76,6 @@
     </ul>
 </section>
 
-<section>
-    <h2>Actors</h2>
-    <ul>
-        <li class="fragment">Lightweight processes</li>
-        <li class="fragment">No shared state</li>
-        <li class="fragment">Inherently concurrent</li>
-        <li class="fragment">Communicate using asynchronous messages</li>
-        <li class="fragment">Messages buffered in an inbox</li>
-        <li class="fragment">Tends to be easier to reason about</li>
-    </ul>
-</section>
-
-<section>
-    <h2>Akkar</h2>
-    <ul>
-        <li class="fragment">"Todarodes sagittatus" has 10 tentacles and likes to swim with other Akkars</li>
-        <li class="fragment">Two-thirds of an octopus's neurons are found in the nerve cords of its arms, which
-            have limited functional autonomy
-        </li>
-        <li class="fragment">Octopus arms show a variety of complex reflex actions that persist even when they
-            have no input from the brain
-        </li>
-        <li class="fragment">.. in other words Akkar-tentacle=Actor</li>
-    </ul>
-    <div class="fragment"><p><img src="akkar.gif"/></p></div>
-</section>
-
-<section>
-    <h2>Example Actor</h2>
-
-    <div class="fragment"><p><pre><code>import scala.actors.Actor
-
-        class MyActor extends Actor {
-        def act(){
-        receive {
-        case s: String => sender ! response
-        }
-        }
-        }</code></pre>
-        </p></div>
-    <br/>
-
-    <div class="fragment">
-        <p><code><pre>
-val actor = new MyActor
-actor.start
-actor ! "hello"</pre>
-        </code></p>
-    </div>
-</section>
-
-<section>
-    <h2>Messages</h2>
-    <ul>
-        <li class="fragment">! send async</li>
-        <li class="fragment">!? sends synchronously (wait for result)</li>
-        <li class="fragment">!! send and receive future</li>
-    </ul>
-</section>
-
-<section>
-    <h2>specs2</h2>
-    <ul>
-        <li class="fragment">used in code examples</li>
-        <li class="fragment">"prose-driven" test-framework</li>
-    </ul>
-    <div class="fragment"><p><pre><code>
-        "ComputeActor" should {
-        "compute length of string" in {
-        val result = ...
-        result must beEqualTo(5)
-        }
-        }
-    </code></pre>
-        </p></div>
-</section>
 
 <section>
     <h2>Do exersices</h2>
@@ -166,6 +90,7 @@ actor ! "hello"</pre>
     <h2>Futures and Promises</h2>
     <ul>
         <li class="fragment">SIP-14 - redesign of scala.concurrent</li>
+        <li class="fragment">Introduced in Scala 2.10</li>
         <li class="fragment">Placeholder object for a result that does not yet exist</li>
     </ul>
 </section>
@@ -184,7 +109,6 @@ actor ! "hello"</pre>
             time-frame
         </blockquote>
         </p></div>
-    <div class="fragment"><p>http://skillsmatter.com/podcast/scala/the-future-i-was-promised</p></div>
 </section>
 
 <section>
@@ -211,10 +135,12 @@ def filter(p: T => Boolean): Future[T]</pre>
         <p><code><pre>
 println("Test print before future")
 val s = "hello"
+
 val f = future {
   Thread.sleep(10)
   s + " future!"
 }
+
 println("Test print after future")
 f onSuccess { case s => println(s) } //Completely asynchronous
 Await.ready(f, Duration.Inf) //Blocks until the future is ready
@@ -222,36 +148,76 @@ Await.ready(f, Duration.Inf) //Blocks until the future is ready
         </code></p>
     </div>
     <div class="fragment"><p>Output: <br/><pre><code>Test print before future
-        Test print after future
-        hello world!
+Test print after future
+hello world!
     </code></pre>
         </p></div>
 </section>
 
 <section>
-    <h2>Promise code example</h2>
-
-    <div class="fragment">
-        <p class="fragment"><code><pre>
-val f = future {
-  Thread.sleep(10)
-  println("Computing sum...")
-  new SumSequence(0, 2).perform
+    <h2>Futures are composeable (1)</h2>
+    <p class="fragment"><code><pre>
+val rateQuote = future {
+  connection.getCurrentValue(USD)
 }
-val p = promise[Int]()
-p completeWith f
-val result = Await.result(p.future, Duration.Inf)
-println("Sum = " + result)
-</pre>
-        </code></p>
-    </div>
-    <div class="fragment"><p>Output: <br/><pre><code>Computing sum...
-        Sum = 3</code></pre>
-        </p></div>
+
+rateQuote onSuccess { case quote =>
+  val purchase = future {
+    if (isProfitable(quote)) connection.buy(amount, quote)
+    else throw new Exception("not profitable")
+  }
+
+  purchase onSuccess {
+    case _ => println("Purchased " + amount + " USD")
+  }
+}
+</code></pre></p>
 </section>
 
+
 <section>
-    <h2>recoverWith code example</h2>
+    <h2>Futures are composeable (2)</h2>
+    <p class="fragment"><code><pre>
+val rateQuote = future {
+  connection.getCurrentValue(USD)
+}
+
+val purchase = rateQuote map { quote =>
+  if (isProfitable(quote)) connection.buy(amount, quote)
+  else throw new Exception("not profitable")
+}
+
+purchase onSuccess {
+  case _ => println("Purchased " + amount + " USD")
+}
+</code></pre></p>
+</section>
+
+
+<!--<section>-->
+    <!--<h2>Promise code example</h2>-->
+
+    <!--<div class="fragment">-->
+        <!--<p class="fragment"><code><pre>-->
+<!--val f = future {-->
+  <!--Thread.sleep(10)-->
+  <!--println("Computing sum...")-->
+  <!--new SumSequence(0, 2).perform-->
+<!--}-->
+<!--val p = promise[Int]()-->
+<!--p completeWith f-->
+<!--val result = Await.result(p.future, Duration.Inf)-->
+<!--println("Sum = " + result)-->
+<!--</pre>-->
+        <!--</code></p>-->
+    <!--</div>-->
+    <!--<div class="fragment"><p>Output: <br/><pre><code>Computing sum...-->
+        <!--Sum = 3</code></pre>-->
+        <!--</p></div>-->
+<!--</section>-->
+
+<section>
+    <h2>Error handling</h2>
 
     <div class="fragment">
         <p class="fragment"><code><pre>val p = promise[Int]()
@@ -274,6 +240,22 @@ p completeWith {
         <li class="fragment">If stuck or finished: git checkout master</li>
     </ul>
 </section>
+
+<section>
+    <h2>Resources</h2>
+    <ul>
+        <li><a href="http://docs.scala-lang.org/overviews/core/futures.html">Scala Documentation - Futures and Promises</a></li>
+        <li><a href="http://skillsmatter.com/podcast/scala/the-future-i-was-promised">Scala Days 2012 - The Future I was Promised</a></li>
+        <li><a href="http://domenic.me/2012/10/14/youre-missing-the-point-of-promises/">You're Missing the Point of Promises</a></li>
+    </ul>
+</section>
+
+<section>
+    <h2>Questions?</h2>
+    <span>Slides: </span><a href="http://arild.github.com/fagdag_mar2013">http://arild.github.com/fagdag_mar2013</a>
+    <span>Code: </span><a href="https://github.com/arild/fagdag_mar2013">https://github.com/arild/fagdag_mar2013</a>
+</section>
+
 </div>
 </div>
 
