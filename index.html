@@ -194,6 +194,33 @@ purchase onSuccess {
 </section>
 
 
+<section>
+    <h2>Futures are composeable (2)</h2>
+    <p class="fragment"><code><pre>
+  val keys = future { readFile("keys.txt") }
+  val values = future { readFile("values.txt") }
+
+  val data = keys.zip(values);
+
+  val hashMap = data.map((ls: (List[String], List[String])) => {
+    ls._1.zip(ls._2).toMap
+  })
+
+  hashMap.recover {
+    case e: FileNotFoundException => {
+      Map[String, String]()
+    }
+  }.onSuccess {
+    case map => {
+      println(map)
+    }
+  }
+
+  Await.result(data, Duration.Inf)
+</code></pre></p>
+</section>
+
+
 <!--<section>-->
     <!--<h2>Promise code example</h2>-->
 
