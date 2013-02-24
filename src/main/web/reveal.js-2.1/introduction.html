@@ -1,0 +1,130 @@
+<html>
+<head>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+        document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+</head>
+
+<body>
+<div class="reveal">
+    <div class="slides">
+
+        <section data-markdown>
+            <h2>Funksjoner I</h2>
+
+                <script type="text/template">
+                def myListMaker(parameter1: Int, parameter2: Int): List[Int] = {
+                    val myImmutableList = List(parameter1, parameter2)
+                    println(myImmutableList)
+                    myImmutableList
+                }
+                </script>
+
+            <h2>Anonym funksjon i Scala</h2>
+            <script type="text/template">
+                (x: Int) => x + 1<script type="text/template">
+            </script>
+        </section>
+
+        <section data-markdown>
+            <h2>Funksjoner II</h2>
+            <p>Kan sendes inn til andre funksjoner</p>
+            <script type="text/template">
+                if(iWantTo)
+                    myObject.myMethod(myFunction)
+            </script>
+        </section>
+
+        <section data-markdown>
+            <h2>Funksjoner III</h2>
+            <p>Kan tas inn som en parameter</p>
+            <script type="text/template">
+                def myMethod(n: Int, f: Int => Boolean) = f(n)
+            </script>
+        </section>
+
+        <section>
+            <h2>Collections I</h2>
+            <p>
+                <img src="seq_tree.png"/>
+            </p>
+        </section>
+
+        <section data-markdown>
+            <h2>Collections II - scala.immutable.List</h2>
+            <ul>
+                <li>Alle elementer i en liste er enten av typen scala.Nil (List()) eller scala.:: (ikke-tom) <br />
+    som implementerer isEmpty, head og tail.</li>
+                <li>O(n) på de fleste operasjoner</li>
+                <li>0(1) på prepend og head/tail-access</li>
+                <li>Egnet for rekursive løsninger basert på head:tail-aksess</li>
+                <li>Lages slik
+                    <script type="text/template">
+                        val myList = List(1,2,3)
+                    </script>
+                </li>
+            </ul>
+        </section>
+
+        <section data-markdown>
+            <h2>Collections III - scala.immutable.List</h2>
+            <script type="text/template">
+                //Adds an element at the beginning of this list.
+                def ::(x: A): List[A]
+                //Adds the elements of a given list in front of this list.
+                def :::(prefix: List[A]): List[A]
+                //Selects all elements of this list which satisfy a predicate.
+                def filter(p: (A) ⇒ Boolean): List[A]
+                Splits this list into a prefix/suffix pair according to a predicate.
+                def span(p: (A) ⇒ Boolean): (List[A], List[A])
+            </script>
+        </section>
+
+        </div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.min.js"></script>
+
+<script>
+
+    // Full list of configuration options available here:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+            { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+            { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+            { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+    });
+
+</script>
+
+
+</body>
+
+</html>
