@@ -66,77 +66,71 @@
 </section>
 
 <section>
-    <h2>Funksjoner I</h2>
+    <h2>Functions</h2>
     <div>
+        <p>Named functions</p>
     <p></p><pre><code>def myListMaker(para1: Int, para2: Int): List[Int] = {
     val myImmutableList = List(para1, para2)
-    println(myImmutableList)
     myImmutableList
 }</code></pre>
     </div>
-
-    <h2>Anonym funksjon i Scala</h2>
+    <p>Anonymous functions</p>
     <pre><code>(x: Int) => x + 1</code></pre>
-        </section>
-
-        <section>
-                <h2>Funksjoner II</h2>
-                <p>Kan sendes inn til andre funksjoner</p>
+     <p>Can be sent into other functions</p>
         <pre><code>if(iWantTo)
     myObject.myMethod(myFunction)</code></pre>
-</section>
-
-<section>
-    <h2>Funksjoner III</h2>
-    <p>Kan tas inn som en parameter</p>
+    <p>Can be accepted as a parameter</p>
     <pre><code>def myMethod(n: Int, f: Int => Boolean) = f(n)</code></pre>
 </section>
 
 <section>
-    <h2>Collections I</h2>
+    <h2>Collections</h2>
     <p>
         <img alt="seq" src="seq_tree.png"/>
     </p>
 </section>
 
 <section>
-    <h2>Collections II - scala.immutable.List</h2>
+    <h2>scala.immutable.List</h2>
     <ul>
-        <li>Alle elementer i en liste er enten av typen scala.Nil (List()) eller scala.:: (ikke-tom) <br />
-            som implementerer isEmpty, head og tail.</li>
-        <li>O(n) på de fleste operasjoner</li>
-        <li>0(1) på prepend og head/tail-access</li>
-        <li>Egnet for rekursive løsninger basert på head:tail-aksess</li>
-        <li>Lages slik
+        <li>All elements of a List is value + pointer to next List (scala.Nil or scala.::) <br />
+        <li>implements isEmpty, head and tail.</li>
+        <li>O(n) on most operations</li>
+        <li>O(1) on prepend and head/tail-access</li>
+        <li>Suitable for recursive solutions based on head:tail-access</li>
+        <li>Constructed like this:
             <pre><code>val myList = List(1,2,3)</code></pre>
         </li>
     </ul>
 </section>
 
 <section>
-    <h2>Collections III - scala.immutable.List</h2>
-    <pre><code>//Adds an element at the beginning of this list.
+    <h2>scala.immutable.List API examples</h2>
+    <pre><code>//Adds an element at the beginning of this list
 def ::(x: A): List[A]
-//Adds the elements of a given list in front of this list.
+
+//Adds the elements of a given list in front of this list
 def :::(prefix: List[A]): List[A]
-//Selects all elements of this list which satisfy a predicate.
+
+//Selects the first element of this list
+def head: A
+
+//Selects last n elements
+def takeRight(n: Int): List[A]
+
+//Selects all elements of this list which satisfy a predicate
 def filter(p: (A) ⇒ Boolean): List[A]
-Splits this list into a prefix/suffix pair according to a predicate.
-def span(p: (A) ⇒ Boolean): (List[A], List[A])</code></pre>
+</code></pre>
 </section>
 
 <section>
-    <h2>map() and filter()</h2>
+    <h2>map()</h2>
     <ul>
-        <li class="fragment">map() takes in a function and applies it to all elements</li>
-        <li class="fragment">map() transforms the list according to the function provided</li>
-        <li class="fragment">filter() takes inn a function predicate</li>
-        <li class="fragment">filter() returns the subset of this list for which the predicate is true</li>
-    </ul>
-</section>
+        <li>map() takes in a function and applies it to all elements</li>
+        <li>map() transforms the list according to the function provided</li>
 
-<section>
-    <h2>Eksempel</h2>
+    </ul>
+
     <pre><code>scala> val numbers = List(1,2,3)
 numbers: List[Int] = List(1, 2, 3)
 
@@ -145,16 +139,18 @@ res0: List[Int] = List(2, 3, 4)</code></pre>
 </section>
 
 <section>
-    <h2>Shared Memory</h2>
+    <h2>filter()</h2>
     <ul>
-        <li class="fragment">Communicate by altering shared memory</li>
-        <li class="fragment">Unpredictable results if unguarded (race conditions)</li>
-        <li class="fragment">Difficult to get correct and to reason about</li>
-        <li class="fragment">Might be difficult to scale (lock contention)</li>
-        <li class="fragment">Deadlocks</li>
+        <li>filter() takes inn a function predicate</li>
+        <li>filter() returns the subset of this list for which the predicate is true</li>
     </ul>
-</section>
 
+    <pre><code>scala> val myList = List(1,2,3,4,5,6)
+myList: List[Int] = List(1, 2, 3, 4, 5, 6)
+
+scala> myList.filter((x: Int) => x % 2 == 0)
+res0: List[Int] = List(2, 4, 6)</code></pre>
+</section>
 
 <section>
     <h2>Do exersices</h2>
