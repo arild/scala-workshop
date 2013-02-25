@@ -153,6 +153,26 @@ res0: List[Int] = List(2, 4, 6)</code></pre>
 </section>
 
 <section>
+    <h2>Pattern matching</h2>
+    <p>match on any sort of data with a first-match policy.</p>
+    <pre><code>def toYesOrNo(choice: Int): String = choice match {
+    case 1 => "yes"
+    case 0 => "no"
+    case _ => "error"
+}</code></pre>
+</section>
+
+<section>
+    <h2>Pattern matching II</h2>
+    <pre><code>def f(x: Any): String = x match {
+    case i:Int => "integer: " + i
+    case _:Double => "a double"
+    case s:String => "I want to say " + s
+}
+    </code></pre>
+</section>
+
+<section>
     <h2>Do exersices</h2>
     <ul>
         <li class="fragment">git clone https://github.com/arild/actors_presentation.git</li>
