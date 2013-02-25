@@ -216,17 +216,15 @@ def map[S](f: T => S): Future[S]
 
 def flatMap[S](f: T => Future[S]): Future[S]
 
-def filter(p: T => Boolean): Future[T]</code>
-            </pre>
+def filter(p: T => Boolean): Future[T]</code></pre>
     </div>
 </section>
 
 <section>
-    <h2>Future code example</h2>
+    <h2>Hello Future</h2>
 
     <div class="fragment">
-        <pre><code>
-println("Test print before future")
+        <pre><code>println("Test print before future")
 val s = "hello"
 
 val f = future {
@@ -235,126 +233,96 @@ val f = future {
 }
 
 println("Test print after future")
-f onSuccess { case s => println(s) } //Completely asynchronous
+f.onSuccess { case s => println(s) } //Completely asynchronous
 Await.ready(f, Duration.Inf) //Blocks until the future is ready
-</code>
-        </pre>
+</code></pre>
     </div>
     <div class="fragment">Output: <br/><pre><code>Test print before future
 Test print after future
-hello world!
-    </code></pre>
+hello world!</code></pre>
         </div>
 </section>
-
-<section>
-    <h2>Futures are composeable (1)</h2>
-    <pre><code>
-val rateQuote = future {
-  connection.getCurrentValue(USD)
-}
-
-rateQuote onSuccess { case quote =>
-  val purchase = future {
-    if (isProfitable(quote)) connection.buy(amount, quote)
-    else throw new Exception("not profitable")
-  }
-
-  purchase onSuccess {
-    case _ => println("Purchased " + amount + " USD")
-  }
-}
-</code></pre>
-</section>
-
-
-<section>
-    <h2>Futures are composeable (2)</h2>
-    <pre><code>val rateQuote = future {
-  connection.getCurrentValue(USD)
-}
-
-val purchase = rateQuote map { quote =>
-  if (isProfitable(quote)) connection.buy(amount, quote)
-  else throw new Exception("not profitable")
-}
-
-purchase onSuccess {
-  case _ => println("Purchased " + amount + " USD")
-}
-</code></pre>
-</section>
-
-
-<section>
-    <h2>Futures are composeable (2)</h2>
-    <pre><code>
-  val keys = future { readFile("keys.txt") }
-  val values = future { readFile("values.txt") }
-
-  val data = keys.zip(values);
-
-  val hashMap = data.map((ls: (List[String], List[String])) => {
-    ls._1.zip(ls._2).toMap
-  })
-
-  hashMap.recover {
-    case e: FileNotFoundException => {
-      Map[String, String]()
-    }
-  }.onSuccess {
-    case map => {
-      println(map)
-    }
-  }
-
-  Await.result(data, Duration.Inf)</code></pre>
-</section>
-
-
-<!--<section>-->
-    <!--<h2>Promise code example</h2>-->
-
-    <!--<div class="fragment">-->
-        <!--<p class="fragment"><pre><code>-->
-<!--val f = future {-->
-  <!--Thread.sleep(10)-->
-  <!--println("Computing sum...")-->
-  <!--new SumSequence(0, 2).perform-->
-<!--}-->
-<!--val p = promise[Int]()-->
-<!--p completeWith f-->
-<!--val result = Await.result(p.future, Duration.Inf)-->
-<!--println("Sum = " + result)-->
-<!--</pre>-->
-        <!--</code></p>-->
-    <!--</div>-->
-    <!--<div class="fragment"><p>Output: <br/><pre><code>Computing sum...-->
-        <!--Sum = 3</code></pre>-->
-        <!--</p></div>-->
-<!--</section>-->
 
 <section>
     <h2>Error handling</h2>
 
     <div class="fragment">
-        <pre><code>val p = promise[Int]()
-val riskyRes = future { riskyOperation.perform }
-val safeRes = future { safeOperation.perform }
-p completeWith {
-  riskyRes recoverWith { 
-    case e: IllegalArgumentException => safeRes
-  }
+<pre><code>val riskyRes = future { riskyWork() }
+val safeRes = future { safeWork() }
+
+val finalRes = riskyRes recoverWith {
+  case e: IllegalArgumentException => safeRes
 }</code></pre>
     </div>
 </section>
 
 <section>
+    <h2>Futures are composeable</h2>
+    <div class="fragment">
+    <pre><code>val keys = future { readFile("keys.txt") }
+val values = future { readFile("values.txt") }
+
+val data = keys.zip(values);
+
+val hashMap = data.map((ls: (List[String], List[String])) => {
+  ls._1.zip(ls._2).toMap
+})
+
+hashMap.recover {
+  case e: FileNotFoundException => {
+    Map[String, String]()
+  }
+}.onSuccess {
+  case map => {
+    println(map)
+  }
+}
+
+Await.result(data, Duration.Inf)</code></pre>
+        </div>
+</section>
+
+<section>
     <h2>Do exersices</h2>
     <ul>
-        <li class="fragment">Keep your promises - make the tests green!</li>
-        <li class="fragment">If stuck or finished: git checkout solution</li>
+        <li class="fragment">git clone https://github.com/arild/fagdag_mar2013.git</li>
+        <li class="fragment">Complete predefined tests for MyFutures</li>
     </ul>
+</section>
+
+<section>
+    <h2>"Futures" vs. "Promises"</h2>
+    <ul>
+        <li class="fragment">"Future", "promise", "delay" and "deferred" used interchangeably</li>
+        <li class="fragment">Complementary primitives</li>
+        <li class="fragment">"Promise" exclusively used in the JavaScript world</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Producer Consumer Example</h2>
+
+    <div class="fragment">
+<pre><code>import scala.concurrent.{ future, promise }
+import scala.concurrent.ExecutionContext.Implicits.global
+
+val p = promise[T]
+val f = p.future
+
+val producer = future {
+  val r = produceSomething()
+  p success r
+  continueDoingSomethingUnrelated()
+}
+
+val consumer = future {
+  startDoingSomething()
+  f onSuccess {
+    case r => doSomethingWithResult()
+  }
+}
+</code></pre>
+    </div>
 </section>
 
 <section>

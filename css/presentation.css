@@ -6,3 +6,7 @@
 section.outline .inner {
     list-style: none;
 }
+
+.slides pre code {
+    max-height: none;
+}
