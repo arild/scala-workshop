@@ -2,3 +2,7 @@
 .slides > section p {
     padding-bottom: 0.5em;
 }
+
+section.outline .inner {
+    list-style: none;
+}
