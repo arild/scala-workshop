@@ -91,38 +91,30 @@
     </ul>
 </section>
 
-<section data-markdown>
+<section>
     <h2>Funksjoner I</h2>
 
-    <script type="text/template">
-        def myListMaker(parameter1: Int, parameter2: Int): List[Int] = {
-        val myImmutableList = List(parameter1, parameter2)
-        println(myImmutableList)
-        myImmutableList
-        }
-    </script>
+    <code><pre>def myListMaker(para1: Int, para2: Int): List[Int] = {
+    val myImmutableList = List(para1, para2)
+    println(myImmutableList)
+    myImmutableList
+}</pre></code>
 
     <h2>Anonym funksjon i Scala</h2>
-    <script type="text/template">
-        (x: Int) => x + 1<script type="text/template">
-    </script>
+    <code><pre>(x: Int) => x + 1</pre></code>
         </section>
 
-        <section data-markdown>
+        <section>
                 <h2>Funksjoner II</h2>
                 <p>Kan sendes inn til andre funksjoner</p>
-        <script type="text/template">
-        if(iWantTo)
-            myObject.myMethod(myFunction)
-    </script>
+        <code><pre>if(iWantTo)
+    myObject.myMethod(myFunction)</pre></code>
 </section>
 
-<section data-markdown>
+<section>
     <h2>Funksjoner III</h2>
     <p>Kan tas inn som en parameter</p>
-    <script type="text/template">
-        def myMethod(n: Int, f: Int => Boolean) = f(n)
-    </script>
+    <code><pre>def myMethod(n: Int, f: Int => Boolean) = f(n)</pre></code>
 </section>
 
 <section>
@@ -132,7 +124,7 @@
     </p>
 </section>
 
-<section data-markdown>
+<section>
     <h2>Collections II - scala.immutable.List</h2>
     <ul>
         <li>Alle elementer i en liste er enten av typen scala.Nil (List()) eller scala.:: (ikke-tom) <br />
@@ -141,25 +133,21 @@
         <li>0(1) på prepend og head/tail-access</li>
         <li>Egnet for rekursive løsninger basert på head:tail-aksess</li>
         <li>Lages slik
-            <script type="text/template">
-                val myList = List(1,2,3)
-            </script>
+            <code><pre>val myList = List(1,2,3)</pre></code>
         </li>
     </ul>
 </section>
 
-<section data-markdown>
+<section>
     <h2>Collections III - scala.immutable.List</h2>
-    <script type="text/template">
-        //Adds an element at the beginning of this list.
-        def ::(x: A): List[A]
-        //Adds the elements of a given list in front of this list.
-        def :::(prefix: List[A]): List[A]
-        //Selects all elements of this list which satisfy a predicate.
-        def filter(p: (A) ⇒ Boolean): List[A]
-        Splits this list into a prefix/suffix pair according to a predicate.
-        def span(p: (A) ⇒ Boolean): (List[A], List[A])
-    </script>
+    <code><pre>//Adds an element at the beginning of this list.
+def ::(x: A): List[A]
+//Adds the elements of a given list in front of this list.
+def :::(prefix: List[A]): List[A]
+//Selects all elements of this list which satisfy a predicate.
+def filter(p: (A) ⇒ Boolean): List[A]
+Splits this list into a prefix/suffix pair according to a predicate.
+def span(p: (A) ⇒ Boolean): (List[A], List[A])</pre></code>
 </section>
 
 <section>
