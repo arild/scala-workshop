@@ -38,7 +38,7 @@
 
 <!-- Any section element inside of this container is displayed as a slide -->
 <div class="slides">
-<section>
+<section class="frontpage">
     <h2>Scala Introduction<br>&<br>Futures and Promises</h2>
     <p>
     <span>Slides: <a href="http://arild.github.com/fagdag_mar2013">http://arild.github.com/fagdag_mar2013</a></span><br>
@@ -66,25 +66,46 @@
 </section>
 
 <section>
-    <h2>Functions</h2>
-    <div>
+    <h2>Functional Programming</h2>
+    <ul>
+        <li class="fragment">Higher-order functions</li>
+        <li class="fragment">Pure functions</li>
+        <li class="fragment">Recursion</li>
+        <li class="fragment">Avoids state and mutable data</li>
+        <li class="fragment">
+            <a href="http://pragprog.com/magazines/2013-01/functional-programming-basics">
+                <q cite="">
+                    Functional programming is programming without assignment statements.</q>
+            </a>
+            <p style="padding-left: 90px;">Robert C. Martin (Uncle Bob), January 2013</p>
+        </li>
+    </ul>
+</section>
+
+<section>
+    <h2>Functions in Scala</h2>
+    <div class="fragment">
         <p>Named functions</p>
     <p></p><pre><code>def myListMaker(para1: Int, para2: Int): List[Int] = {
     val myImmutableList = List(para1, para2)
     myImmutableList
 }</code></pre>
     </div>
+    <div class="fragment">
     <p>Anonymous functions</p>
     <pre><code>(x: Int) => x + 1</code></pre>
      <p>Can be sent into other functions</p>
         <pre><code>if(iWantTo)
     myObject.myMethod(myFunction)</code></pre>
+    </div>
+    <div class="fragment">
     <p>Can be accepted as a parameter</p>
     <pre><code>def myMethod(n: Int, f: Int => Boolean) = f(n)</code></pre>
+    </div>
 </section>
 
 <section>
-    <h2>Collections</h2>
+    <h2>Collections in Scala</h2>
     <p>
         <img alt="seq" src="seq_tree.png"/>
     </p>
@@ -93,12 +114,12 @@
 <section>
     <h2>scala.immutable.List</h2>
     <ul>
-        <li>All elements of a List is value + pointer to next List (scala.Nil or scala.::) <br />
-        <li>implements isEmpty, head and tail.</li>
-        <li>O(n) on most operations</li>
-        <li>O(1) on prepend and head/tail-access</li>
-        <li>Suitable for recursive solutions based on head:tail-access</li>
-        <li>Constructed like this:
+        <li class="fragment">All elements of a List is value + pointer to next List (scala.Nil or scala.::) <br />
+        <li class="fragment">implements isEmpty, head and tail.</li>
+        <li class="fragment">O(n) on most operations</li>
+        <li class="fragment">O(1) on prepend and head/tail-access</li>
+        <li class="fragment">Suitable for recursive solutions based on head:tail-access</li>
+        <li class="fragment">Constructed like this:
             <pre><code>val myList = List(1,2,3)</code></pre>
         </li>
     </ul>
@@ -207,20 +228,6 @@ res0: List[Int] = List(2, 4, 6)</code></pre>
 </section>
 
 <section>
-    <h2>Basic Operations on Futures</h2>
-
-    <div class="fragment">
-            <pre><code>def foreach[U](f: T => U): Unit
-
-def map[S](f: T => S): Future[S]
-
-def flatMap[S](f: T => Future[S]): Future[S]
-
-def filter(p: T => Boolean): Future[T]</code></pre>
-    </div>
-</section>
-
-<section>
     <h2>Hello Future</h2>
 
     <div class="fragment">
@@ -233,14 +240,31 @@ val f = future {
 }
 
 println("Test print after future")
-f.onSuccess { case s => println(s) } //Completely asynchronous
-Await.ready(f, Duration.Inf) //Blocks until the future is ready
-</code></pre>
+
+// Completely asynchronous
+f.onSuccess { case s => println(s) }
+
+// Blocks until the future is ready
+Await.ready(f, Duration.Inf)</code></pre>
     </div>
     <div class="fragment">Output: <br/><pre><code>Test print before future
 Test print after future
 hello future!</code></pre>
-        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Basic Operations on Futures</h2>
+
+    <div class="fragment">
+            <pre><code>def foreach[U](f: T => U): Unit
+
+def map[S](f: T => S): Future[S]
+
+def flatMap[S](f: T => Future[S]): Future[S]
+
+def filter(p: T => Boolean): Future[T]</code></pre>
+    </div>
 </section>
 
 <section>
@@ -264,7 +288,7 @@ val values = future { readFile("values.txt") }
 
 val data = keys.zip(values);
 
-val hashMap = data.map((ls: (List[String], List[String])) => {
+val hashMap = data.map(ls: (List[String], List[String])) => {
   ls._1.zip(ls._2).toMap
 })
 
