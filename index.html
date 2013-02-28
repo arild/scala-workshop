@@ -169,8 +169,8 @@ res0: List[Int] = List(2, 3, 4)</code></pre>
     <pre><code>scala> val myList = List(1,2,3,4,5,6)
 myList: List[Int] = List(1, 2, 3, 4, 5, 6)
 
-scala> myList.filter((x: Int) => x % 2 == 0)
-res0: List[Int] = List(2, 4, 6)</code></pre>
+scala> myList.filter((x: Int) => x > 3)
+res0: List[Int] = List(4, 5, 6)</code></pre>
 </section>
 
 <section>
@@ -302,7 +302,7 @@ hashMap.recover {
   }
 }
 
-Await.result(data, Duration.Inf)</code></pre>
+Await.result(hashMap, Duration.Inf)</code></pre>
         </div>
 </section>
 
@@ -327,22 +327,19 @@ Await.result(data, Duration.Inf)</code></pre>
     <h2>Producer Consumer Example</h2>
 
     <div class="fragment">
-<pre><code>import scala.concurrent.{ future, promise }
-import scala.concurrent.ExecutionContext.Implicits.global
-
-val p = promise[T]
+<pre><code>val p = promise[T]
 val f = p.future
 
 val producer = future {
-  val r = produceSomething()
-  p success r
+  val result = produceSomething()
+  p success result
   continueDoingSomethingUnrelated()
 }
 
 val consumer = future {
   startDoingSomething()
   f onSuccess {
-    case r => doSomethingWithResult()
+    case res => doSomething(res)
   }
 }
 </code></pre>
