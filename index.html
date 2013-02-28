@@ -257,12 +257,21 @@ hello future!</code></pre>
     <h2>Basic Operations on Futures</h2>
 
     <div class="fragment">
-            <pre><code>def foreach[U](f: T => U): Unit
+            <pre><code>//Asynchronously processes the value in 
+//the future once the value becomes available.
+def foreach[U](f: T => U): Unit
 
+//Creates a new future by applying a function to the successful
+//result of this future.
 def map[S](f: T => S): Future[S]
 
+//Creates a new future by applying a function to the successful 
+//result of this future, and returns the result of the function
+//as the new future.
 def flatMap[S](f: T => Future[S]): Future[S]
 
+//Creates a new future by filtering the value of the current future
+//with a predicate.
 def filter(p: T => Boolean): Future[T]</code></pre>
     </div>
 </section>
