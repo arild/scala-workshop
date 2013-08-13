@@ -15,7 +15,7 @@ class MyFuturesTest extends FlatSpecHelper with ShouldMatchers {
 
   def delayFactorNumber(n: Long): FactorNumber = new FactorNumber(n, FlatSpecHelper.FUTURE_TIME_LIMIT * 2)
 
-    it should("should compute square") in {
+    it should "should compute square" in {
     checkImplemented {
       val future = time {
         MyFutures.computeSquare(2)
@@ -25,7 +25,7 @@ class MyFuturesTest extends FlatSpecHelper with ShouldMatchers {
     }
   }
 
-  it should("should compute square of future value") in {
+  it should "should compute square of future value" in {
     checkImplemented {
       val futureValue = future {
         Thread.sleep(FlatSpecHelper.FUTURE_TIME_LIMIT * 2)
@@ -39,7 +39,7 @@ class MyFuturesTest extends FlatSpecHelper with ShouldMatchers {
     }
   }
 
-  it should("should find max factor") in {
+  it should "should find max factor" in {
     checkImplemented {
       val work = delayFactorNumber(49L)
       val futureResult = time {
@@ -50,7 +50,7 @@ class MyFuturesTest extends FlatSpecHelper with ShouldMatchers {
     }
   }
 
-  it should("should find max factor of future factors") in {
+  it should "should find max factor of future factors" in {
     checkImplemented {
       val futureFactors = future {
         delayFactorNumber(49L)
@@ -63,7 +63,7 @@ class MyFuturesTest extends FlatSpecHelper with ShouldMatchers {
     }
   }
 
-  it should("do risky work or fallback on safe work") in {
+  it should "do risky work or fallback on safe work" in {
     checkImplemented{
       // Each work will exceed the time limit
       val shouldNotDoWork = new SumSequence(0, 4, FlatSpecHelper.FUTURE_TIME_LIMIT + 1)
@@ -85,18 +85,18 @@ class MyFuturesTest extends FlatSpecHelper with ShouldMatchers {
     }
   }
 
-  it should("find sum of all max factors") in {
+  it should "find sum of all max factors" in {
     checkImplemented {
       val work = Seq(delayFactorNumber(21L), delayFactorNumber(49L), delayFactorNumber(12L))
       val futureResult = time {
         MyFutures.findSumOfAllMaxFactors(work)
       }
       val result = Await.result(futureResult, Duration.Inf)
-      result should equal (0L)
+      result should equal (20L)
     }
   }
 
-  it should("find max factor of all max factors in parallel") in {
+  it should "find max factor of all max factors in parallel" in {
     checkImplemented {
       // Each work will take at least 100 milliseconds
       val work = Seq(delayFactorNumber(49L), delayFactorNumber(12L), delayFactorNumber(21L), delayFactorNumber(54L))
