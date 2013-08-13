@@ -1,8 +1,8 @@
 package funsuitehelper
 
-import org.scalatest.FunSuite
+import org.scalatest.FlatSpec
 
-class FunSuiteHelper extends FunSuite {
+class FlatSpecHelper extends FlatSpec {
 
   def checkImplemented[R](block: => R): R = {
     try {
@@ -16,13 +16,13 @@ class FunSuiteHelper extends FunSuite {
     val t0 = System.currentTimeMillis()
     val result = block
     val t1 = System.currentTimeMillis()
-    if (t1 - t0 > FunSuiteHelper.FUTURE_TIME_LIMIT)
+    if (t1 - t0 > FlatSpecHelper.FUTURE_TIME_LIMIT)
       fail("Did not return immediately as a future!")
     result
   }
 
 }
 
-object FunSuiteHelper {
+object FlatSpecHelper {
   val FUTURE_TIME_LIMIT: Long = 100
 }

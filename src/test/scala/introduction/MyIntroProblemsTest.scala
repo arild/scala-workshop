@@ -2,37 +2,39 @@ package test.scala.introduction
 
 import introduction.MyIntroProblems
 import work.FactorNumber
-import funsuitehelper.FunSuiteHelper
+import funsuitehelper.FlatSpecHelper
+import org.scalatest.matchers.ShouldMatchers
 
-class MyIntroProblemsTest extends FunSuiteHelper {
 
-  test("should compute square") {
+class MyIntroProblemsTest extends FlatSpecHelper with ShouldMatchers {
+
+  it should("should compute square") in {
     checkImplemented{MyIntroProblems.computeSquare(4) == 16}
   }
 
-  test("should find last element") {
+  it should("should find last element") in {
     checkImplemented{MyIntroProblems.findLastElement(List(1, 2, 3)) == 3}
   }
 
-  test("should find two last elements") {
+  it should("should find two last elements") in {
     checkImplemented{MyIntroProblems.findTwoLastElements(List(1, 2, 3)) == List(2, 3)}
   }
 
-  test("should find even numbers") {
+  it should("should find even numbers") in {
     checkImplemented{MyIntroProblems.findEvenNumbers(List(1, 2, 3, 4, 6, 7)) == List(2, 4, 6)}
   }
 
-  test("should find sublist from predicate") {
+  it should("should find sublist from predicate") in {
     checkImplemented{MyIntroProblems.findSublistFromPredicate(List(1, 2, 3, 4, 5), x => x > 3) == List(4, 5)}
     checkImplemented{MyIntroProblems.findSublistFromPredicate(List(1, 2, 3, 4, 5), x => x % 2 == 1) == List(1, 3, 5)}
   }
 
-  test("should sum of all max factors") {
+  it should("should sum of all max factors") in {
     val work = List(new FactorNumber(21L), new FactorNumber(49L), new FactorNumber(12L))
     checkImplemented{MyIntroProblems.findSumOfAllMaxFactors(work) == 20L}
   }
 
-  test("should compute square of int or string") {
+  it should("should compute square of int or string") in {
     checkImplemented{MyIntroProblems.computeSquareOfIntOrString(4) == 16}
     checkImplemented{MyIntroProblems.computeSquareOfIntOrString("4") == 16}
   }
