@@ -1,8 +1,9 @@
-Scala, Futures & Promises
+
+### Introduksjon til Scala og Futures & Promises
 
 Scala er et funksjonelt programmeringsspråk som kjøer på JVM'en
 
-Futures & Promises er asynkrone mekanismer som kan forenkle implementasjon av parallelltet
+Futures & Promises er asynkrone primitiver for å uttrykke parallellitet.
 
 Denne workshopen vil gi en introduksjon til Scala via noen slides og hands-on oppgaver, før Futures & Promises introduseres.
 
@@ -18,7 +19,8 @@ Før 5. september er det noen ting som bør være installert og satt opp:
               http://confluence.jetbrains.com/display/SCA/Scala+Plugin+for+IntelliJ+IDEA
 4. Installerer git
 5. Henter ned prosjektet : `git clone https://github.com/arild/fagdag_mar2013.git`
-6. eksekverer `sbt` fra mappen 'fagdag_mar2013', og skriver enten `eclipse` eller `gen-idea` (avhengig av IDE)
-7. Åpner prosjektet i Eclipse eller IntelliJ
+6. Eksekverer `sbt` fra mappen 'fagdag_mar2013', og skriver enten `eclipse` eller `gen-idea` (avhengig av IDE)
+7. Åpne prosjektet i Eclipse eller IntelliJ
+8. Se at tester kjører: eksekverer `sbt test` fra mappen 'fagdag_mar2013'.
 
 Ved problemer med oppsettet, send en mail til arild.nilsen (at) bekk.no eller sjur.millidahl (at) bekk.no kontaktes
