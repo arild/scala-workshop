@@ -86,17 +86,14 @@
     <h2>Functions in Scala</h2>
     <div class="fragment">
         <p>Named functions</p>
-    <p></p><pre><code>def myListMaker(para1: Int, para2: Int): List[Int] = {
-    val myImmutableList = List(para1, para2)
+    <p></p><pre><code>def createList(param1: Int, param2: Int): List[Int] = {
+    val myImmutableList = List(param1, param2)
     myImmutableList
 }</code></pre>
     </div>
     <div class="fragment">
     <p>Anonymous functions</p>
     <pre><code>(x: Int) => x + 1</code></pre>
-     <p>Can be sent into other functions</p>
-        <pre><code>if(iWantTo)
-    myObject.myMethod(myFunction)</code></pre>
     </div>
     <div class="fragment">
     <p>Can be accepted as a parameter</p>
@@ -114,35 +111,19 @@
 <section>
     <h2>scala.immutable.List</h2>
     <ul>
-        <li class="fragment">All elements of a List is value + pointer to next List (scala.Nil or scala.::) <br />
-        <li class="fragment">implements isEmpty, head and tail.</li>
+        <li class="fragment">Implements isEmpty, head and tail.</li>
         <li class="fragment">O(n) on most operations</li>
         <li class="fragment">O(1) on prepend and head/tail-access</li>
         <li class="fragment">Suitable for recursive solutions based on head:tail-access</li>
-        <li class="fragment">Constructed like this:
-            <pre><code>val myList = List(1,2,3)</code></pre>
+        <li class="fragment">Examples:
+            <pre><code>scala> 4 :: List(1, 2, 3) // Prepend, O(1)
+res0: List[Int] = List(4, 1, 2, 3)</code></pre>
+                        <pre><code>scala> List(1, 2, 3) ::: List(4) // Append, O(n), prefer prepend
+res1: List[Int] = List(1, 2, 3, 4)</code></pre>
         </li>
     </ul>
 </section>
 
-<section>
-    <h2>scala.immutable.List API examples</h2>
-    <pre><code>//Adds an element at the beginning of this list
-def ::(x: A): List[A]
-
-//Adds the elements of a given list in front of this list
-def :::(prefix: List[A]): List[A]
-
-//Selects the first element of this list
-def head: A
-
-//Selects last n elements
-def takeRight(n: Int): List[A]
-
-//Selects all elements of this list which satisfy a predicate
-def filter(p: (A) ⇒ Boolean): List[A]
-</code></pre>
-</section>
 
 <section>
     <h2>map()</h2>
@@ -173,6 +154,27 @@ scala> myList.filter((x: Int) => x > 3)
 res0: List[Int] = List(4, 5, 6)</code></pre>
 </section>
 
+
+<section>
+    <h2>scala.immutable.List API examples</h2>
+    <pre><code>//Adds an element at the beginning of this list
+def ::(x: A): List[A]
+
+//Adds the elements of a given list in front of this list
+def :::(prefix: List[A]): List[A]
+
+//Selects the first element of this list
+def head: A
+
+//Selects last n elements
+def takeRight(n: Int): List[A]
+
+//Selects all elements of this list which satisfy a predicate
+def filter(p: (A) ⇒ Boolean): List[A]
+</code></pre>
+</section>
+
+
 <section>
     <h2>Pattern matching</h2>
     <p>match on any sort of data with a first-match policy.</p>
@@ -189,8 +191,7 @@ res0: List[Int] = List(4, 5, 6)</code></pre>
     case i:Int => "integer: " + i
     case _:Double => "a double"
     case s:String => "I want to say " + s
-}
-    </code></pre>
+}</code></pre>
 </section>
 
 <section>
@@ -350,8 +351,7 @@ val consumer = future {
   f onSuccess {
     case res => doSomething(res)
   }
-}
-</code></pre>
+}</code></pre>
     </div>
 </section>
 
