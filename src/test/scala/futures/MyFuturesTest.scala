@@ -18,10 +18,10 @@ class MyFuturesTest extends FlatSpecHelper with ShouldMatchers {
     it should "should compute square" in {
     checkImplemented {
       val future = time {
-        MyFutures.computeSquare(2)
+        MyFutures.computeSquare(4)
       }
       val result = Await.result(future, Duration.Inf)
-      result should equal (4)
+      result should equal (16)
     }
   }
 
@@ -29,13 +29,13 @@ class MyFuturesTest extends FlatSpecHelper with ShouldMatchers {
     checkImplemented {
       val futureValue = future {
         Thread.sleep(FlatSpecHelper.FUTURE_TIME_LIMIT * 2)
-        2
+        4
       }
       val futureResult = time {
         MyFutures.computeSquare(futureValue)
       }
       val result = Await.result(futureResult, Duration.Inf)
-      result should equal (4)
+      result should equal (16)
     }
   }
 
@@ -87,12 +87,20 @@ class MyFuturesTest extends FlatSpecHelper with ShouldMatchers {
 
   it should "find sum of all max factors" in {
     checkImplemented {
-      val work = Seq(delayFactorNumber(21L), delayFactorNumber(49L), delayFactorNumber(12L))
-      val futureResult = time {
-        MyFutures.findSumOfAllMaxFactors(work)
+      val work1 = Seq(delayFactorNumber(21L), delayFactorNumber(49L), delayFactorNumber(12L))
+      val work2 = Seq(delayFactorNumber(51L), delayFactorNumber(81L))
+
+      val futureResult1 = time {
+        MyFutures.findSumOfAllMaxFactors(work1)
       }
-      val result = Await.result(futureResult, Duration.Inf)
-      result should equal (20L)
+      val futureResult2 = time {
+        MyFutures.findSumOfAllMaxFactors(work2)
+      }
+
+      val result1 = Await.result(futureResult1, Duration.Inf)
+      result1 should equal (20L)
+      val result2 = Await.result(futureResult2, Duration.Inf)
+      result2 should equal (44L)
     }
   }
 
