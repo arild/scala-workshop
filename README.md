@@ -9,7 +9,8 @@ Denne workshopen vil gi en introduksjon til Scala via noen slides og hands-on op
 Før 5. september er det noen ting som bør være installert og satt opp:
 
 1. Installerer Scala 2.10.x (http://www.scala-lang.org/downloads)
-2. Installerer sbt 0.12.x (http://www.scala-sbt.org/0.12.2/docs/Getting-Started/Setup.html)
+2. Installerer sbt 0.12.2 (http://www.scala-sbt.org/0.12.2/docs/Getting-Started/Setup.html) - OBS Følg instruksjonene nøye - kan også være nødvendig å øke minne i filen sbt.bat ved å skrive inn følgende som ny linje (linje nr 13) :
+set SBT_OPTS = -Xmx500M  -XX:MaxPermSize=128M
 3. Installerer Scala-plugin i sitt IDE
        * Eclipse:
               http://scala-ide.org/download/milestone.html#scala_ide_21_milestone_3  
