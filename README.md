@@ -1,5 +1,7 @@
 ### Introduksjon til Scala og Futures & Promises
 
+Tilhørende slides for workshop: http://arild.github.io/fagdag_mar2013
+
 Scala er et funksjonelt programmeringsspråk som kjøer på JVM'en
 
 Futures & Promises er asynkrone primitiver for å uttrykke parallellitet.
