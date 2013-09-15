@@ -1,6 +1,6 @@
 ### Introduksjon til Scala og Futures & Promises
 
-Tilhørende slides for workshop: http://arild.github.io/fagdag_mar2013
+Tilhørende slides for workshop: http://arild.github.io/scala-workshop
 
 Scala er et funksjonelt programmeringsspråk som kjøer på JVM'en
 
