@@ -15,7 +15,7 @@ class MyFuturesTest extends FlatSpecHelper with ShouldMatchers {
 
   def delayFactorNumber(n: Long): FactorNumber = new FactorNumber(n, FlatSpecHelper.FUTURE_TIME_LIMIT * 2)
 
-    it should "should compute square" in {
+    it should "compute square" in {
     checkImplemented {
       val future = time {
         MyFutures.computeSquare(4)
@@ -25,7 +25,7 @@ class MyFuturesTest extends FlatSpecHelper with ShouldMatchers {
     }
   }
 
-  it should "should compute square of future value" in {
+  it should "compute square of future value" in {
     checkImplemented {
       val futureValue = future {
         Thread.sleep(FlatSpecHelper.FUTURE_TIME_LIMIT * 2)
@@ -39,7 +39,7 @@ class MyFuturesTest extends FlatSpecHelper with ShouldMatchers {
     }
   }
 
-  it should "should find max factor" in {
+  it should "find max factor" in {
     checkImplemented {
       val work = delayFactorNumber(49L)
       val futureResult = time {
@@ -50,7 +50,7 @@ class MyFuturesTest extends FlatSpecHelper with ShouldMatchers {
     }
   }
 
-  it should "should find max factor of future factors" in {
+  it should "find max factor of future factors" in {
     checkImplemented {
       val futureFactors = future {
         delayFactorNumber(49L)
