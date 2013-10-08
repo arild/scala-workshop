@@ -296,9 +296,9 @@ val finalRes = riskyRes recoverWith {
     <pre><code>val keys = future { readFile("keys.txt") }
 val values = future { readFile("values.txt") }
 
-val data = keys.zip(values);
+val data = keys.zip(values)
 
-val hashMap = data.map(ls: (List[String], List[String])) => {
+val hashMap = data.map((ls: (List[String], List[String])) => {
   ls._1.zip(ls._2).toMap
 })
 
